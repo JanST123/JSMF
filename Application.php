@@ -83,7 +83,7 @@ class Application {
   
   /**
    * returns current controller instance
-   * @return \JSMF\Controller
+   * @return Controller
    **/
   public static function getController() :Controller {
     return self::$_controller;

@@ -29,7 +29,7 @@ class Cache implements Cache\CacheInterface {
 
   /**
    * connects to server if not already connected, returns status
-   * @return Boolean $success
+   * @return bool $success
    **/
   public static function connect() :bool {
     return call_user_func(self::_getCacheBackend() . '::connect');
