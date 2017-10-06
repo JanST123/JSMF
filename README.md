@@ -3,50 +3,56 @@
 With this framework you can build a whole MVC (Model-View-Controller)-based PHP Application or just use it as a collection of useful PHP classes. All parts of the framework can be used individually.
 
 See the [ApiIndex](docs/ApiIndex.md) for all available classes and methods.
-Please refer to the example application while the documentation is in this incomplete state.
+
+Please refer to the **example application** while the documentation is in this incomplete state.
 
 ## Sample Application Bootstrap
 This is only needed if you want to base your whole application on JSMF. You can also use single Classes, using the JSMF autoloader or your own.
 
 Place this code in your applications index file. Route all request thru this file (See this [Gist](https://gist.github.com/RaVbaker/2254618) for an introduction on how to route all requests to index.php with Apache)
-Using this minimal setup will let the JSMF\Application class determine the Model/Controller/Action from the request url (http://host/module/controller/action) If one or more url parts are not present, the application will always use the "index" action (the "index" controller, the "index" module). Example: Requesting http://host will try to call module "index" -> IndexController -> indexAction, Request to http://host/misc/faq will call module "misc" -> FaqController -> indexAction
+Using this minimal setup will let the JSMF\Application class determine the Model/Controller/Action from the request url (http://host/module/controller/action).
 
-	<?php
-	define('DEV_SERVER', true); // define this 
-	define('SRC', realpath(dirname(__FILE__) . '/../'));
-	require(SRC . '/lib/JSMF/_autoloader.php');
+If one or more url parts are not present, the application will always use the "index" action (the "index" controller, the "index" module). 
 
-	try {
-	  // optional: load an application wide config
-	  JSMF\Config::load(SRC . '/config/base.config.php');
+Example: Requesting http://host will try to call module "index" -> IndexController -> indexAction, Request to http://host/misc/faq will call module "misc" -> FaqController -> indexAction
 
-	  // optional: load application wide translations
-	  JSMF\Language::loadTranslations(SRC . '/language/translations', 'de');
+```php
+<?php
+define('DEV_SERVER', true); // define this 
+define('SRC', realpath(dirname(__FILE__) . '/../'));
+require(SRC . '/lib/JSMF/_autoloader.php');
 
-	  // optional: route special URLs to special modules / controllers / actions ( I always place the legal texts in a Module named misc)
-	  JSMF\Request::addRoute('/^\/disclaimer\/?$/i', 'misc', 'index', 'disclaimer'); // route a request to /disclaimer to the disclaimer Action in the IndexController in the module "misc"
-	  JSMF\Request::addRoute('/^\/privacy\/?$/i', 'misc', 'index', 'privacy');
+try {
+  // optional: load an application wide config
+  JSMF\Config::load(SRC . '/config/base.config.php');
 
-	  // run the application
-	  JSMF\Application::run();
+  // optional: load application wide translations
+  JSMF\Language::loadTranslations(SRC . '/language/translations', 'de');
 
-	  // output the applications response (can be HTML, JSON ...)
-	  JSMF\Response::output();
+  // optional: route special URLs to special modules / controllers / actions ( I always place the legal texts in a Module named misc)
+  JSMF\Request::addRoute('/^\/disclaimer\/?$/i', 'misc', 'index', 'disclaimer'); // route a request to /disclaimer to the disclaimer Action in the IndexController in the module "misc"
+  JSMF\Request::addRoute('/^\/privacy\/?$/i', 'misc', 'index', 'privacy');
 
-	} catch(JSMF\Exception\NotFound $e) {
-	  // do some special things for not-found errors e.g. redirect to a static 404 page
-	  JSMF\Request::redirect('/404.html');
-	  JSMF\Response::output(); // output method also sends the headers (here: the Location header)
+  // run the application
+  JSMF\Application::run();
 
-	} catch(JSMF\Exception $e) {
-	  // output is done by JSMF
-	  JSMF\Response::output();
+  // output the applications response (can be HTML, JSON ...)
+  JSMF\Response::output();
 
-	} catch(Exception $e) {
-	  // do something on common non-JSMF Exception
-	}
+} catch(JSMF\Exception\NotFound $e) {
+  // do some special things for not-found errors e.g. redirect to a static 404 page
+  JSMF\Request::redirect('/404.html');
+  JSMF\Response::output(); // output method also sends the headers (here: the Location header)
 
-See also the example code.
+} catch(JSMF\Exception $e) {
+  // output is done by JSMF
+  JSMF\Response::output();
+
+} catch(Exception $e) {
+  // do something on common non-JSMF Exception
+}
+```
+
 
 
 
