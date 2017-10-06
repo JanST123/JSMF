@@ -82,6 +82,27 @@ add WHERE clause to select, update, delete commands
 * $queries **Array**
 * $params **Array** - &lt;p&gt;(the PDO params used in the queries)&lt;/p&gt;
 
+#### Example for $queries
+    $queries = [
+        [ 'alias.fieldname', '=?'],
+        'AND',
+        [ 'alias.fieldname2', 'IS NOT NULL', 'OR', [
+                                                ['alias.fieldname3', 'IS NULL'],
+                                                'AND'
+                                                ['alias.fieldname4', 'LIKE "%foo"']
+                                             ]
+        ],
+     ]
+
+This will result in a WHERE clause like:
+WHERE (alias.fieldname=?) AND (alias.fieldname2 IS NOT NULL OR (alias.fieldname3 IS NULL AND alias.fieldname4 LIKE "%foo"))
+
+Queries can be nested as deep as needed by nesting the array too (example with fieldname3 and fieldname4)
+Each part of the query that is an own array will be surrounded by brackets
+
+It looks more complicated than writing the query by hand, but with this technique the database class can ensure the correct COLLATION for each field
+
+
 
 
 ### orderBy
