@@ -1,0 +1,74 @@
+JSMF\Form\Validator\Email
+===============
+
+
+
+
+
+
+* Class name: Email
+* Namespace: JSMF\Form\Validator
+* This class implements: [JSMF\Form\Validator\ValidatorInterface](JSMF-Form-Validator-ValidatorInterface.md)
+
+
+
+
+
+
+Methods
+-------
+
+
+### init
+
+    mixed JSMF\Form\Validator\Email::init(\DOMNode $el)
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+
+
+#### Arguments
+* $el **DOMNode**
+
+
+
+### validate
+
+    mixed JSMF\Form\Validator\ValidatorInterface::validate(\DOMNode $el, $value, $args, $formData)
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+* This method is defined by [JSMF\Form\Validator\ValidatorInterface](JSMF-Form-Validator-ValidatorInterface.md)
+
+
+#### Arguments
+* $el **DOMNode**
+* $value **mixed**
+* $args **mixed**
+* $formData **mixed**
+
+
+
+### getHTMLValidatorAttributes
+
+    mixed JSMF\Form\Validator\Email::getHTMLValidatorAttributes($args)
+
+
+
+
+
+* Visibility: **public**
+
+
+#### Arguments
+* $args **mixed**
+
+

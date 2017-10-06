@@ -1,0 +1,64 @@
+JSMF\Database\Type\DBFunction
+===============
+
+Class
+Represents a Database-Function-Call as value-type
+
+
+
+
+* Class name: DBFunction
+* Namespace: JSMF\Database\Type
+
+
+
+
+
+Properties
+----------
+
+
+### $mySQLFunctions
+
+    public mixed $mySQLFunctions = array('ABS', 'ACOS', 'ADDDATE', 'ADDTIME', 'ASCII', 'ASIN', 'AVG', 'BIN', 'CASE', 'CAST', 'CEIL', 'CEILING', 'CHAR', 'CHAR_LENGTH', 'CHARACTER_LENGTH', 'COALESCE', 'COERCIBILITY', 'COLLATION', 'COMPRESS', 'CONCAT', 'CONCAT_WS', 'CONNECTION_ID', 'CONV', 'CONVERT', 'CONVERT_TZ', 'COS', 'COT', 'CURDATE', 'CURRENT_DATE', 'CURRENT_TIME', 'CURTIME', 'CURRENT_TIMESTAMP', 'DATE', 'DATE_ADD', 'DATE_FORMAT', 'DATE_SUB', 'DATEDIFF', 'DAY', 'DAYNAME', 'DAYOFMONTH', 'DAYOFWEEK', 'DAYOFYEAR', 'DEGREES', 'EXP', 'EXTRACT', 'FIELD', 'FIND_IN_SET', 'FLOOR', 'FORMAT', 'FROM_BASE64', 'FROM_DAYS', 'FROM_UNIXTIME', 'GREATEST', 'GROUP_CONCAT', 'HEX', 'HOUR', 'IFNULL', 'INET_ATON', 'INET_NTOA', 'INET6_ATON', 'INET6_NTOA', 'INTERVAL', 'ISNULL', 'LAST_DAY', 'LAST_INSERT_ID', 'LCASE', 'LEAST', 'LEFT', 'LENGTH', 'LOCALTIME', 'LOG', 'LOG10', 'LOG2', 'LOWER', 'LPAD', 'LTRIM', 'MAKE_SET', 'MAKEDATE', 'MAKETIME', 'MAX', 'MD5', 'MICROSECOND', 'MID', 'MIN', 'MINUTE', 'MOD', 'MONTH', 'MONTHNAME', 'NOW', 'NULLIF', 'OCT', 'ORD', 'PERIOD_ADD', 'PERIOD_DIFF', 'POW', 'POWER', 'QUARTER', 'RADIANS', 'RAND', 'REPEAT', 'REPLACE', 'REVERSE', 'RIGHT', 'ROUND', 'RPAD', 'RTRIM', 'SECOND', 'SHA1', 'SHA', 'SHA2', 'SOUNDEX', 'ST_Area', 'ST_AsBinary', 'ST_AsGeoJSON', 'ST_AsText', 'ST_Buffer', 'ST_Buffer_Strategy', 'ST_Centroid', 'ST_Contains', 'ST_ConvexHull', 'ST_Crosses', 'ST_Difference', 'ST_Dimension', 'ST_Disjoint', 'ST_Distance', 'ST_Distance_Sphere', 'ST_EndPoint', 'ST_Envelope', 'ST_Equals', 'ST_ExteriorRing', 'ST_GeoHash', 'ST_GeomCollFromText', 'ST_GeomCollFromWKB', 'ST_GeometryN', 'ST_GeometryType', 'ST_GeomFromGeoJSON', 'ST_GeomFromText', 'ST_GeomFromWKB', 'ST_InteriorRingN', 'ST_Intersection', 'ST_Intersects', 'ST_IsClosed', 'ST_IsEmpty', 'ST_IsSimple', 'ST_IsValid', 'ST_LatFromGeoHash', 'ST_Length', 'ST_LineFromText', 'ST_LineStringFromText', 'ST_LineFromWKB', 'ST_LineStringFromWKB', 'ST_LongFromGeoHash', 'ST_MakeEnvelope', 'ST_MLineFromText', 'ST_MultiLineStringFromText', 'ST_MLineFromWKB', 'ST_MultiLineStringFromWKB', 'ST_MPointFromText', 'ST_MultiPointFromText', 'ST_MPointFromWKB', 'ST_MultiPointFromWKB', 'ST_MPolyFromText', 'ST_MultiPolygonFromText', 'ST_MPolyFromWKB', 'ST_MultiPolygonFromWKB', 'ST_NumGeometries', 'ST_NumInteriorRing', 'ST_NumInteriorRings', 'ST_NumPoints', 'ST_Overlaps', 'ST_PointFromGeoHash', 'ST_PointFromText', 'ST_PointFromWKB', 'ST_PointN', 'ST_PolyFromText', 'ST_PolygonFromText', 'ST_PolyFromWKB', 'ST_PolygonFromWKB', 'ST_Simplify', 'ST_SRID', 'ST_StartPoint', 'ST_SymDifference', 'ST_Touches', 'ST_Union', 'ST_Validate', 'ST_Within', 'ST_X', 'ST_Y', 'STR_TO_DATE', 'SUBDATE', 'SUBSTR', 'SUBSTRING', 'SUBSTRING_INDEX', 'SUBTIME', 'SUM', 'TAN', 'TIME', 'TIME_FORMAT', 'TIME_TO_SEC', 'TIMEDIFF', 'TIMESTAMP', 'TIMESTAMPADD', 'TIMESTAMPDIFF', 'TO_BASE64', 'TO_DAYS', 'TO_SECONDS', 'TRIM', 'TRUNCATE', 'UCASE', 'UNCOMPRESS', 'UNCOMPRESSED_LENGTH', 'UNHEX', 'UNIX_TIMESTAMP', 'UPPER', 'UTC_DATE', 'UTC_TIME', 'UTC_TIMESTAMP', 'UUID', 'UUID_SHORT', 'VALIDATE_PASSWORD_STRENGTH', 'WEEK', 'WEEKDAY', 'WEEKOFYEAR', 'YEAR', 'YEARWEEK')
+
+
+
+
+
+* Visibility: **public**
+* This property is **static**.
+
+
+Methods
+-------
+
+
+### __toString
+
+    mixed JSMF\Database\Type\DBFunction::__toString()
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+### __construct
+
+    mixed JSMF\Database\Type\DBFunction::__construct(\JSMF\Database\Type\string $functionCall)
+
+
+
+
+
+* Visibility: **public**
+
+
+#### Arguments
+* $functionCall **JSMF\Database\Type\string**
+
+
