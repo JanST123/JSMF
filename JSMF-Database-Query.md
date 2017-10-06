@@ -95,7 +95,8 @@ add WHERE clause to select, update, delete commands
      ]
 
 This will result in a WHERE clause like:
-WHERE (alias.fieldname=?) AND (alias.fieldname2 IS NOT NULL OR (alias.fieldname3 IS NULL AND alias.fieldname4 LIKE "%foo"))
+    
+    WHERE (alias.fieldname=?) AND (alias.fieldname2 IS NOT NULL OR (alias.fieldname3 IS NULL AND alias.fieldname4 LIKE "%foo"))
 
 Queries can be nested as deep as needed by nesting the array too (example with fieldname3 and fieldname4)
 Each part of the query that is an own array will be surrounded by brackets
