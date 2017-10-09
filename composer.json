@@ -1,0 +1,20 @@
+{
+    "name": "janst123/jsmf",
+    "type": "library",
+    "description": "Small PHP framework for building MVC-based applications",
+    "authors": [
+        {
+            "name": "Jan Stuhlmann",
+            "email": "info@jan-stuhlmann.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "JSMF\\": "src/"
+        }
+    },
+    "license": "LGPL-3.0"
+}
