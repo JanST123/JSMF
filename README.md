@@ -6,6 +6,17 @@ See the [ApiIndex](docs/ApiIndex.md) for all available classes and methods.
 
 Please refer to the **example application** while the documentation is in this incomplete state.
 
+## Installation
+You can install JSMF via Composer. Add the following dependency to your composer.json
+```json
+{
+  "require": {
+    "janst123/jsmf":">=1.0"
+}
+```
+
+You can also clone JSMF from this repository (use the version tags or clone the master branch for latest changes). In this case you have to write your own autoloader.
+
 ## Sample Application Bootstrap
 This is only needed if you want to base your whole application on JSMF. You can also use single Classes, using the JSMF autoloader or your own.
 
@@ -20,7 +31,7 @@ Example: Requesting http://host will try to call module "index" -> IndexControll
 <?php
 define('DEV_SERVER', true); // define this 
 define('SRC', realpath(dirname(__FILE__) . '/../'));
-require(SRC . '/lib/JSMF/_autoloader.php');
+require(SRC . '/vendor/autoload.php');
 
 try {
   // optional: load an application wide config
