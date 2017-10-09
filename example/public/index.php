@@ -1,7 +1,7 @@
 <?php
 define('DEV_SERVER', true); // define this to get detailed exceptions
 define('SRC', realpath(dirname(__FILE__) . '/../'));
-require(SRC . '/lib/JSMF/_autoloader.php');
+require(SRC . '/vendor/autoload.php');
 
 if (DEV_SERVER) {
   ini_set('display_errors', 1);
