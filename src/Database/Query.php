@@ -34,7 +34,6 @@ class Query {
   private $_orderBy=[];
   private $_groupBy=[];
   private $_fetchCount;
-  private $_whereReplaceCount=0;
   private $_whereReplaceParams=null;
   private $_lastStmt=null;
   private $_collateTable=null;
@@ -291,7 +290,6 @@ class Query {
   public function addWhere(array $queries, array $params=[]) {
     if (isset($queries[0]) && !is_array($queries[0])) $queries = [ $queries ];
 
-    $this->_whereReplaceCount=count($this->_params);
     $this->_whereReplaceParams=$params;
 
     $this->_where[] = $this->_addWhereDo($queries);
@@ -323,7 +321,7 @@ class Query {
         }
 
         // replace unnamed params with named params cause we merge them all together here
-        $operation = preg_replace_callback('/\?/', [$this, '_whereReplaceParams'], $operation, -1, $this->_whereReplaceCount);
+        $operation = preg_replace_callback('/\?/', [$this, '_whereReplaceParams'], $operation, -1);
 
         // divide field into table and field, resolve table alias
         $table = $this->_table;
@@ -847,12 +845,22 @@ class Query {
    * @return String
    **/
   private function _whereReplaceParams(array $matches) :string {
-    if (isset($this->_whereReplaceParams[$this->_whereReplaceCount])) {
-      $this->_whereReplaceParams[':param' . $this->_whereReplaceCount] = $this->_whereReplaceParams[$this->_whereReplaceCount];
-      unset($this->_whereReplaceParams[$this->_whereReplaceCount]);
+    // get next free number
+    krsort($this->_whereReplaceParams);
+    $next=0;
+    foreach ($this->_whereReplaceParams as $key => $value) {
+      if (strpos($key, ':param') === 0) {
+        $next=(int)substr($key, 6);
+        ++$next;
+        break;
+      }
     }
 
-    return ':param' . $this->_whereReplaceCount;
+    $this->_whereReplaceParams[':param' . $next] = $this->_whereReplaceParams[$next];
+    unset($this->_whereReplaceParams[$next]);
+
+    $ret = ':param' . $next;
+    return $ret;
   }
 
 
