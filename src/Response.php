@@ -25,14 +25,19 @@ class Response {
    * adds a header for sending later
    * @param String $header
    * @param Int|null $httpcode
-   * @param Boolean|true $replace
+   * @param Boolean|true $replace (meaning of replace see: http://php.net/manual/en/function.header.php)
+   * @param Boolean|false $onlyIfNotExists (add the header only if no other header of this type (e.g. Content-Type) exists
    * @return Void
    */
-  public static function addHeader(string $header, int $httcode=null, bool $replace=true) {
-    if (!isset(self::$_headers[$header]) || $replace) {
-      self::$_headers[$header]=Array();
+  public static function addHeader(string $header, int $httcode=null, bool $replace=true, bool $onlyIfNotExists=false) {
+    $headerKey = explode(':', $header)[0];
+
+    if ($onlyIfNotExists && isset(self::$_headers[$headerKey])) return;
+
+    if (!isset(self::$_headers[$headerKey]) || $replace) {
+      self::$_headers[$headerKey]=Array();
     }
-    self::$_headers[$header][]=Array($httcode, $replace);
+    self::$_headers[$headerKey][]=Array($httcode, $replace, $header);
   }
 
 
@@ -75,11 +80,11 @@ class Response {
    */
   public static function setOutput($data) {
     if ($data===null) {
-      self::addHeader('Content-Type: text/html; charset=UTF-8');
+      self::addHeader('Content-Type: text/html; charset=UTF-8', null, true, true);
       self::$_output='';
       
     } elseif (self::$_outputFormat=='json' || (!is_scalar($data) && !$data instanceof Template)) {
-      Response::addHeader('Content-Type: application/json; charset=UTF-8');
+      Response::addHeader('Content-Type: application/json; charset=UTF-8', null, true, true);
       
       //if (is_array($data) && !isset($data['success'])) $data['success']=true;
       $options=null;
@@ -89,7 +94,7 @@ class Response {
       self::$_output=json_encode($data, $options);
         
     } else {
-      self::addHeader('Content-Type: text/html; charset=UTF-8');
+      self::addHeader('Content-Type: text/html; charset=UTF-8', null, true, true);
 
       // disable layout on ajax requests
       if ($data instanceof Template && Request::isAjax()) $data->disableLayout();
@@ -167,9 +172,9 @@ HTML;
    */
   public static function output() {
     // send headers
-    foreach (self::$_headers as $header => $headers) {
+    foreach (self::$_headers as $headerKey => $headers) {
       foreach ($headers as $headerData) {
-        header($header, $headerData[1], $headerData[0]);
+        header($headerData[2], $headerData[1], $headerData[0]);
       }
     }
 
