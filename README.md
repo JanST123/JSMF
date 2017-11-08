@@ -11,7 +11,7 @@ You can install JSMF via Composer. Add the following dependency to your composer
 ```json
 {
   "require": {
-    "janst123/jsmf":">=1.0"
+    "janst123/jsmf":">=1.0.0"
 }
 ```
 
