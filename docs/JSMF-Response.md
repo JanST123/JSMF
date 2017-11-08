@@ -49,6 +49,7 @@ adds a header for sending later
 * $header **String**
 * $httcode **JSMF\int**
 * $replace **Boolean|true**
+* $onlyIfNotExists **Boolean|false**
 
 
 
