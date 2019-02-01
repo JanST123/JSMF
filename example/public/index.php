@@ -19,7 +19,8 @@ try {
   JSMF\Request::addRoute('/^\/disclaimer\/?$/i', 'misc', 'index', 'disclaimer'); // route a request to /disclaimer to the disclaimer Action in the IndexController in the module "misc"
   JSMF\Request::addRoute('/^\/privacy\/?$/i', 'misc', 'index', 'privacy');
 
-  // run the application
+  // register the autoloader and run the application
+  JSMF\Application::registerAutoloader();
   JSMF\Application::run();
 
   // output the applications response (can be HTML, JSON ...)
