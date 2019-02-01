@@ -21,6 +21,11 @@ class Request {
   private static $_routeParams=Array();
   private static $_unserializedPayload=null;
 
+  /**
+   * @var bool Set to true to disable overriding module/controller/action by request params module/controller/action
+   */
+  public static $disableRoutingOverrideByRequestParams=false;
+
 
   /**
    * Returns instance of this class
@@ -307,6 +312,23 @@ class Request {
             self::$_routeParams[$key]=$val;
           }
         }
+
+        if (strpos($route['module'], '$')===0) {
+          if (isset($matches[substr($route['module'], 1)])) {
+            $route['module'] = $matches[substr($route['module'], 1)];
+          }
+        }
+        if (strpos($route['controller'], '$')===0) {
+          if (isset($matches[substr($route['controller'], 1)])) {
+            $route['controller'] = $matches[substr($route['controller'], 1)];
+          }
+        }
+        if (strpos($route['action'], '$')===0) {
+          if (isset($matches[substr($route['action'], 1)])) {
+            $route['action'] = $matches[substr($route['action'], 1)];
+          }
+        }
+
         return $route;
       }
     }
@@ -324,8 +346,10 @@ class Request {
    * @return String
    */
   public static function getController(string $default) :string {
-    $controllerOverride=self::get('controller');
-    if ($controllerOverride) return $controllerOverride;
+    if (!self::$disableRoutingOverrideByRequestParams) {
+      $controllerOverride = self::get('controller');
+      if ($controllerOverride) return $controllerOverride;
+    }
 
     $route=self::_matchRoutes();
     if ($route) {
@@ -347,8 +371,10 @@ class Request {
    * @return String
    */
   public static function getAction(string $default) :string {
-    $actionOverride=self::get('action');
-    if ($actionOverride) return $actionOverride;
+    if (!self::$disableRoutingOverrideByRequestParams) {
+      $actionOverride = self::get('action');
+      if ($actionOverride) return $actionOverride;
+    }
     
     $route=self::_matchRoutes();
     if ($route) {
@@ -371,8 +397,10 @@ class Request {
    * @return String
    */
   public static function getModule(string $default) :string {
-    $moduleOverride=self::get('module');
-    if ($moduleOverride) return $moduleOverride;
+    if (!self::$disableRoutingOverrideByRequestParams) {
+      $moduleOverride = self::get('module');
+      if ($moduleOverride) return $moduleOverride;
+    }
 
     $route=self::_matchRoutes();
     if ($route) {
@@ -444,6 +472,66 @@ class Request {
   }
 
 
+  /**
+   * returns all request headers
+   * @param $filterHeaders Array (Array with headers to filter. prefix with "-" to exclude those headers, prefix with "+" (or omit prefix) to include those headers - empty filter means all headers. Add a "-*" entry to use it as a whitelist, add a "+*" or "*" value to use it as blacklist )
+   * @param $curlFormat Boolean (true to return indexed array with 'headerName: headerValue' as value instead of associative array)
+   * @return array
+   */
+  public static function getHeaders(array $filterHeaders=[], $curlFormat=false) :array {
+    $headers = [];
+
+    $filterIsBlacklist=false;
+    $filterIsWhitelist=false;
+    if (array_search('+*', $filterHeaders) !== FALSE || array_search('*', $filterHeaders) !== FALSE) {
+      $filterIsBlacklist=true;
+    } elseif (array_search('-*')) {
+      $filterIsWhitelist=true;
+    }
+
+    foreach ($_SERVER as $name => $value) {
+      if (substr($name, 0, 5) == 'HTTP_') {
+        $headerName = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))));
+
+        if (count($filterHeaders)) {
+          $skip = false;
+          if ($filterIsWhitelist) {
+            if (array_search('+' . $headerName, $filterHeaders) === FALSE && array_search($headerName, $filterHeaders)) {
+              $skip = true;
+            }
+
+          } else if ($filterIsBlacklist) {
+            foreach ($filterHeaders as $filterHeader) {
+              $prefix = substr($filterHeader, 0, 1);
+              if ($prefix == '-' || $prefix == '+') {
+                $filterHeader = substr($filterHeader, 1);
+              } else {
+                $prefix = '+';
+              }
+
+
+              if ($headerName == $filterHeader || $filterHeader == '*') {
+                if ($prefix == '-') {
+                  $skip = true;
+                }
+              }
+            }
+          }
+        }
+
+
+        if (!$skip) {
+          if ($curlFormat) {
+            $headers[] = $headerName . ': ' . $value;
+
+          } else {
+            $headers[$headerName] = $value;
+          }
+        }
+      }
+    }
+    return $headers;
+  }
 
 }
   
