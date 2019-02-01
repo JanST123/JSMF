@@ -37,6 +37,7 @@ try {
 
 } catch(JSMF\Exception $e) {
   // output is done by JSMF
+  JSMF\Response::setException($e);
   JSMF\Response::output();
 
 } catch(Exception $e) {
