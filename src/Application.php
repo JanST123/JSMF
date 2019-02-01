@@ -65,10 +65,10 @@ class Application {
         do {
           array_pop($pathExpl);
           array_unshift($classNotExists, array_pop($classExpl));
-        } while (count($pathExpl) && !file_exists(BASE_PATH . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR,
+        } while (count($pathExpl) && !file_exists($moduleDir . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR,
             $pathExpl)));
 
-        $lastExistingPath = BASE_PATH . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR,
+        $lastExistingPath = $moduleDir . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR,
             $pathExpl) . DIRECTORY_SEPARATOR;
         self::logg('path exists up to: ' . $lastExistingPath);
 
