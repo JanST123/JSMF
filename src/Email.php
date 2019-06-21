@@ -23,7 +23,16 @@ class Email {
 
   }
 
-  public static function send(string $to, string $subject, string $body, array $additionalHeaders=[]) :bool {
+  /**
+   * send the email, sends HTML E-Mail (with plain-text fallback) if detect body contains html
+   * @param string $to - the recipient
+   * @param string $subject
+   * @param string $body
+   * @param array $additionalHeaders - (optional headers)
+   * @param boolean nl2brforHTML - defaults to true, converts line breaks to <br /> tags. can result in too many line break in html version
+   * @return boolean $success
+   */
+  public static function send(string $to, string $subject, string $body, array $additionalHeaders=[], $nl2brforHTML=true) :bool {
     self::_init();
 
     // detect html
@@ -51,9 +60,10 @@ class Email {
 
     if ($isHtml) {
       $tmp = imap_8bit(nl2br($body));
+      $tmpHTML = $nl2brforHTML ? imap_8bit(nl2br($body)) : imap_8bit($body);
       $body = "This is a MIME encoded message.";
       $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/plain; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . strip_tags($tmp);
-      $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/html; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . $tmp;
+      $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/html; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . $tmpHTML;
       $body.="\r\n\r\n--" . $boundary ."--";
     }
 
