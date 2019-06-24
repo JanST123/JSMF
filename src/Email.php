@@ -59,10 +59,19 @@ class Email {
     );
 
     if ($isHtml) {
-      $tmp = imap_8bit(nl2br($body));
+      $tmp = imap_8bit(
+        preg_replace('/^\h+/m', '',
+          html_entity_decode(
+            strip_tags(
+              preg_replace('/^\s*(<[^>]+>\s*)+\r?\n/m', '', $body)
+            )
+          )
+        )
+      );
+
       $tmpHTML = $nl2brforHTML ? imap_8bit(nl2br($body)) : imap_8bit($body);
       $body = "This is a MIME encoded message.";
-      $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/plain; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . strip_tags($tmp);
+      $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/plain; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . $tmp;
       $body.="\r\n\r\n--" . $boundary ."\r\nContent-Type: text/html; charset=" . self::$charset . "\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n" . $tmpHTML;
       $body.="\r\n\r\n--" . $boundary ."--";
     }
